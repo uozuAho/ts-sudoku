@@ -1,4 +1,5 @@
 import * as constants from "./constants";
+import { zip } from "./utils";
 
 /** Represents an unsolved/solved sudoku game,
  *  containing possible values for each square
@@ -78,8 +79,4 @@ export class Puzzle {
 
 function is_1to9(c: string) {
     return c >= '1' && c <= '9';
-}
-
-function zip(a: Array<any>, b: Array<any>): Array<any> {
-    return a.map((x, i) => [x, b[i]]);
 }

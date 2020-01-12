@@ -67,6 +67,7 @@ function row_units() {
     return Array.from(rows).map(r => cross(r, cols));
 }
 
+// todo: generator
 function box_units() {
     const boxes = [];
     for (const rs of ['ABC', 'DEF', 'GHI']) {
