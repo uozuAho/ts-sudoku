@@ -5,16 +5,19 @@ import * as constants from "./constants";
  */
 export class Puzzle {
     public static fromString = (input_string: string) => {
-        const is_square = (c: string) => is_digit(c) || c === '0' || c === '.';
+        const is_square = (c: string) => is_1to9(c) || c === '0' || c === '.';
         const input_values = Array.from(input_string).filter(c => is_square(c));
         if (input_values.length !== 81) {
             throw new Error(`Need 81 chars, got ${input_values.length}`);
         }
 
         const puzzle = new Puzzle();
-        const input_map = new Map(zip(constants.squares, input_values));
+        const input_map = new Map<string, string>(zip(constants.squares, input_values));
         for (const square of constants.squares) {
-
+            const input_square = input_map.get(square);
+            if (is_1to9(input_square)) {
+                puzzle._values.set(square, input_square);
+            }
         }
         return puzzle;
     }
@@ -73,8 +76,8 @@ export class Puzzle {
     }
 }
 
-function is_digit(c: string) {
-    return c >= '0' && c <= '9';
+function is_1to9(c: string) {
+    return c >= '1' && c <= '9';
 }
 
 function zip(a: Array<any>, b: Array<any>): Array<any> {
