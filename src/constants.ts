@@ -1,20 +1,41 @@
 export const digits  = '123456789';
 export const rows    = 'ABCDEFGHI';
 export const cols    = digits;
+
 /** a 'square' is a single cell of the sudoku grid */
 export const squares = cross(rows, cols);
+
 /** a 'unit' is a collection of 9 squares - a column, row, or box */
 export const units =
     box_units()
         .concat(row_units())
         .concat(col_units());
 
-function build_unit_lookup() {
-    
+/** returns units that the given square is in */
+export const unitsOf = (square: string): string[][] => {
+    return _unit_lookup.get(square);
+}
+
+const _unit_lookup = build_unit_lookup();
+
+function build_unit_lookup(): Map<string, string[][]> {
+    const lookup = new Map<string, string[][]>();
+
+    for (const square of squares) {
+        const square_units = [];
+        for (const unit of units) {
+            if (unit.indexOf(square) !== -1) {
+                square_units.push(unit);
+            }
+        }
+        lookup.set(square, square_units)
+    }
+
+    return lookup;
 }
 
 function col_units() {
-    return Array.from(cols).map(c => cross(c, rows));
+    return Array.from(cols).map(c => cross(rows, c));
 }
 
 function row_units() {
