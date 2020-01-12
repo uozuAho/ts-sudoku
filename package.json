@@ -11,7 +11,7 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "babel src --out-dir dist --extensions \".ts,.tsx\" --source-maps inline",
     "build.all": "npm run build.prod && npm run build.esnext",
-    "test": "jest"
+    "test": "jest --watch"
   },
   "author": "uozuAho",
   "license": "ISC",
