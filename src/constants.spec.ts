@@ -23,6 +23,21 @@ describe('constants', () => {
                 ['C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9'],
                 ['A2', 'B2', 'C2', 'D2', 'E2', 'F2', 'G2', 'H2', 'I2'],
             ]);
+        });
+    });
+
+    describe('peer lookup', () => {
+        it('should have 20 peers', () => {
+            for (const square of constants.squares) {
+                expect(constants.peersOf(square)).toHaveLength(20);
+            }
+        });
+
+        it('should get peers for C2', () => {
+            expect(constants.peersOf('C2').sort()).toEqual([
+                'A2', 'B2', 'D2', 'E2', 'F2', 'G2', 'H2', 'I2',
+                'C1', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'C9',
+                'A1', 'A3', 'B1', 'B3'].sort());
         })
     });
 });

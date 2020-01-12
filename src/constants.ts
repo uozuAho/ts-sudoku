@@ -16,7 +16,14 @@ export const unitsOf = (square: string): string[][] => {
     return _unit_lookup.get(square);
 }
 
+/** returns peers of the given square */
+export const peersOf = (square: string): string[] => {
+    return _peer_lookup.get(square);
+}
+
 const _unit_lookup = build_unit_lookup();
+
+const _peer_lookup = build_peer_lookup();
 
 function build_unit_lookup(): Map<string, string[][]> {
     const lookup = new Map<string, string[][]>();
@@ -29,6 +36,24 @@ function build_unit_lookup(): Map<string, string[][]> {
             }
         }
         lookup.set(square, square_units)
+    }
+
+    return lookup;
+}
+
+function build_peer_lookup(): Map<string, string[]> {
+    const lookup = new Map<string, string[]>();
+
+    for (const square of squares) {
+        const peers = new Set<string>();
+        for (const unit of unitsOf(square)) {
+            for (const unit_square of unit) {
+                peers.add(unit_square);
+            }
+        }
+        // peers shouldn't contain the given square
+        peers.delete(square);
+        lookup.set(square, Array.from(peers))
     }
 
     return lookup;
