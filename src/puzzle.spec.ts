@@ -14,6 +14,8 @@ describe('puzzle', () => {
             '005010300'
         );
 
-        expect(puzzle.toString()).toEqual('');
+        expect(puzzle.toGameString()).toEqual(
+            '. . 3 |. 2 . |6 . . \n' +
+            '9 . . |3 . 5 |. . 1 \n');
     });
 });

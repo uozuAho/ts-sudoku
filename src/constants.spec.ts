@@ -1,8 +1,17 @@
 import * as constants from "./constants";
 
 describe('constants', () => {
-    it('should have 81 squares', () => {
-        expect(constants.squares.length).toBe(81);
+    describe('squares', () => {
+        it('should have 81', () => {
+            expect(constants.squares.length).toBe(81);
+        });
+
+        it('should be in left to right, top to bottom order', () => {
+            expect(constants.squares[0]).toBe('A1');
+            expect(constants.squares[1]).toBe('A2');
+            expect(constants.squares[79]).toBe('I8');
+            expect(constants.squares[80]).toBe('I9');
+        });
     });
 
     it('should have 27 units', () => {
