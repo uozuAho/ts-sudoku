@@ -18,6 +18,12 @@ export class Puzzle {
 
     private _values: ValuesMap;
 
+    public solve() {}
+
+    public valuesAt(square: string): string {
+        return this._values.get(square);
+    }
+
     /** returns a string that could be used in a game - empty squares are represented by dots */
     public toGameString = (): string => {
         const squares = this._values.all().map(v => v.length > 1 ? '.' : v);
