@@ -1,7 +1,7 @@
 import { Puzzle } from "./puzzle";
 
 describe('puzzle', () => {
-    it('should initialise from string', () => {
+    it('should format user friendly game string', () => {
         const puzzle = Puzzle.fromString(
             '003020600' +
             '900305001' +
@@ -26,5 +26,32 @@ describe('puzzle', () => {
             '. . 2 |6 . 9 |5 . . \n' +
             '8 . . |2 . 3 |. . 9 \n' +
             '. . 5 |. 1 . |3 . . \n');
+    });
+
+    it('should format user friendly "possible values" string', () => {
+        const puzzle = Puzzle.fromString(
+            '113121611' +
+            '911315111' +
+            '111816411' +
+            '118112911' +
+            '711111108' +  // 0 in this row should display as all 9 possible values
+            '116718211' +
+            '112619511' +
+            '811213119' +
+            '115111311'
+        );
+
+        expect(puzzle.toPossibleValuesString()).toEqual(
+            '1         1         3         |1         2         1         |6         1         1         \n' +
+            '9         1         1         |3         1         5         |1         1         1         \n' +
+            '1         1         1         |8         1         6         |4         1         1         \n' +
+            '------------------------------+------------------------------+------------------------------\n' +
+            '1         1         8         |1         1         2         |9         1         1         \n' +
+            '7         1         1         |1         1         1         |1         123456789 8         \n' +
+            '1         1         6         |7         1         8         |2         1         1         \n' +
+            '------------------------------+------------------------------+------------------------------\n' +
+            '1         1         2         |6         1         9         |5         1         1         \n' +
+            '8         1         1         |2         1         3         |1         1         9         \n' +
+            '1         1         5         |1         1         1         |3         1         1         \n');
     });
 });

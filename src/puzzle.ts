@@ -20,44 +20,41 @@ export class Puzzle {
 
     /** returns a string that could be used in a game - empty squares are represented by dots */
     public toGameString = (): string => {
-        const line = '------+------+------'
-        let output_arr = [];
-        for (const row of constants.rows) {
-            for (const col of constants.cols) {
-                const values = this._values.get(row + col);
-                const square_display = values.length === 1 ? values[0] + ' ' : '. ';
-                output_arr.push(square_display);
-                if (col === '3' || col === '6') {
-                    output_arr.push('|');
-                }
-                if (col === '9') {
-                    output_arr.push('\n');
-                }
-            }
-            if (row == 'C' || row == 'F') {
-                output_arr.push(line + '\n');
-            }
-        }
-        return output_arr.join('');
+        const squares = this._values.all().map(v => v.length > 1 ? '.' : v);
+        return this.renderGridString(squares);
     }
 
     /** Returns a string of the grid, with empty squares displaying the possible
      *  values they could contain
      */
     public toPossibleValuesString = (): string => {
-        const max_num_values = Math.max(...constants.squares.map(s => this._values.get(s).length));
-        const values_width =  1 + max_num_values;
-        const line_segment = '-'.repeat(values_width * 3);
+        const max_width = Math.max(...this._values.all().map(v => v.length));
+        const render_square = (v: string) => {
+            const rem = max_width - v.length;
+            return v + ' '.repeat(rem);
+        }
+        const squares = this._values.all().map(v => render_square(v));
+        return this.renderGridString(squares);
+    }
+
+    private renderGridString = (rendered_squares: string[]): string => {
+        const max_square_width = Math.max(...rendered_squares.map(s => s.length));
+        const box_width = 3 * (max_square_width + 1);
+        const line_segment = '-'.repeat(box_width);
         const line = `${line_segment}+${line_segment}+${line_segment}`;
         let output_arr = [];
-        for (const row of constants.rows) {
-            for (const col of constants.cols) {
-                output_arr.push(this._values.get(row + col))
-                if (col == '3' || col == '6') {
-                    output_arr.push('|');
-                }
+        for (let i = 0; i < 81; i++) {
+            const square = rendered_squares[i];
+            const row = constants.rows[Math.floor(i / 9)];
+            const col = constants.cols[i % 9];
+            output_arr.push(square + ' ');
+            if (col === '3' || col === '6') {
+                output_arr.push('|');
+            }
+            if (col === '9') {
+                output_arr.push('\n');
                 if (row == 'C' || row == 'F') {
-                    output_arr.push('\n');
+                    output_arr.push(line + '\n');
                 }
             }
         }
@@ -107,6 +104,10 @@ class ValuesMap {
     /** set possible values at this coord */
     public set = (coord: string, values: string): void => {
         this._values.set(coord, values);
+    }
+
+    public all = (): string[] => {
+        return constants.squares.map(s => this._values.get(s));
     }
 }
 
