@@ -1,6 +1,12 @@
 import { ValuesMap } from "./values_map";
 
-describe('puzzle', () => {
+describe('ValuesMap', () => {
+    describe('contains', () => {
+        it('return true if square contains value', () => {
+            ValuesMap.ofAllValues().contains('A1', '1');
+        });
+    });
+
     it('should format user friendly "possible values" string', () => {
         const valuesMap = ValuesMap.fromString(
             '113121611' +

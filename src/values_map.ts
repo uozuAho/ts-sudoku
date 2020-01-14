@@ -32,6 +32,11 @@ export class ValuesMap {
         return map;
     }
 
+    /** returns true if square contains the given value */
+    public contains = (square: string, value: string): boolean => {
+        return this.get(square).indexOf(value) !== -1;
+    }
+
     /** get possible values at this coord */
     public get = (coord: string): string => {
         return this._values.get(coord);
