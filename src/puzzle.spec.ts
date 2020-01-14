@@ -1,69 +1,11 @@
 import { Puzzle } from "./puzzle";
 
 describe('puzzle', () => {
-    // todo: maybe values map could have this behaviour
-    it.skip('should format user friendly game string', () => {
-        const puzzle = Puzzle.fromString(
-            '003020600' +
-            '900305001' +
-            '001806400' +
-            '008102900' +
-            '700000008' +
-            '006708200' +
-            '002609500' +
-            '800203009' +
-            '005010300'
-        );
-
-        expect(puzzle.toGameString()).toEqual(
-            '. . 3 |. 2 . |6 . . \n' +
-            '9 . . |3 . 5 |. . 1 \n' +
-            '. . 1 |8 . 6 |4 . . \n' +
-            '------+------+------\n' +
-            '. . 8 |1 . 2 |9 . . \n' +
-            '7 . . |. . . |. . 8 \n' +
-            '. . 6 |7 . 8 |2 . . \n' +
-            '------+------+------\n' +
-            '. . 2 |6 . 9 |5 . . \n' +
-            '8 . . |2 . 3 |. . 9 \n' +
-            '. . 5 |. 1 . |3 . . \n');
-    });
-
-    // todo: maybe values map could have this behaviour
-    it.skip('should format user friendly "possible values" string', () => {
-        const puzzle = Puzzle.fromString(
-            '113121611' +
-            '911315111' +
-            '111816411' +
-            '118112911' +
-            '711111108' +  // 0 in this row should display as all 9 possible values
-            '116718211' +
-            '112619511' +
-            '811213119' +
-            '115111311'
-        );
-
-        expect(puzzle.toPossibleValuesString()).toEqual(
-            '1         1         3         |1         2         1         |6         1         1         \n' +
-            '9         1         1         |3         1         5         |1         1         1         \n' +
-            '1         1         1         |8         1         6         |4         1         1         \n' +
-            '------------------------------+------------------------------+------------------------------\n' +
-            '1         1         8         |1         1         2         |9         1         1         \n' +
-            '7         1         1         |1         1         1         |1         123456789 8         \n' +
-            '1         1         6         |7         1         8         |2         1         1         \n' +
-            '------------------------------+------------------------------+------------------------------\n' +
-            '1         1         2         |6         1         9         |5         1         1         \n' +
-            '8         1         1         |2         1         3         |1         1         9         \n' +
-            '1         1         5         |1         1         1         |3         1         1         \n');
-    });
-
     it('should partially solve first attempt', () => {
         const puzzle = Puzzle.fromString(
             '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......');
 
         puzzle.solve();
-
-        console.log(puzzle.toPossibleValuesString());
 
         /* Just check a few values from this. cbf converting it to my format
               4      1679   12679  |  139     2369    269   |   8      1239     5    
