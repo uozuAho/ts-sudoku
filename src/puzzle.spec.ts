@@ -1,7 +1,8 @@
 import { Puzzle } from "./puzzle";
 
 describe('puzzle', () => {
-    it('should format user friendly game string', () => {
+    // todo: maybe values map could have this behaviour
+    it.skip('should format user friendly game string', () => {
         const puzzle = Puzzle.fromString(
             '003020600' +
             '900305001' +
@@ -28,7 +29,8 @@ describe('puzzle', () => {
             '. . 5 |. 1 . |3 . . \n');
     });
 
-    it('should format user friendly "possible values" string', () => {
+    // todo: maybe values map could have this behaviour
+    it.skip('should format user friendly "possible values" string', () => {
         const puzzle = Puzzle.fromString(
             '113121611' +
             '911315111' +
@@ -60,6 +62,8 @@ describe('puzzle', () => {
             '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......');
 
         puzzle.solve();
+
+        console.log(puzzle.toPossibleValuesString());
 
         /* Just check a few values from this. cbf converting it to my format
               4      1679   12679  |  139     2369    269   |   8      1239     5    
