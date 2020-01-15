@@ -1,7 +1,9 @@
 import * as constants from "./constants";
 import { ValuesMap } from "./values_map";
 
-// assign value to square, propagate changes
+/** Assign value to square and propagate.
+ *  Returns false if a contradiction is found, else true;
+ */
 export function assign(values: ValuesMap, square: string, value: string): boolean {
     if (value.length > 1) throw new Error('cant assign multiple values to a square');
 
@@ -10,18 +12,21 @@ export function assign(values: ValuesMap, square: string, value: string): boolea
         const result = eliminate(values, square, v);
         if (!result) return false;
     }
+
     return true;
 }
 
-// eliminate possible value from square, propagate changes
+/** Eliminate possible value from square and propagate.
+ *  Returns false if a contradiction is found, else true.
+ */
 export function eliminate(values: ValuesMap, square: string, value: string): boolean {
+    if (value.length > 1) throw new Error('cant eliminate multiple values from a square');
+
     if (!values.contains(square, value)) return true;
 
-    // eliminate value from this square
-    values.set(square, values.get(square).replace(value, ''));
+    values.remove(square, value);
 
-    // no possible values in this square, no solution
-    if (values.get(square).length === 0) return false;
+    if (!values.any(square)) return false;
 
     if (values.get(square).length === 1) {
         const remaining_value = values.get(square);
@@ -46,8 +51,7 @@ export function eliminate(values: ValuesMap, square: string, value: string): boo
 
 const removeFromPeers = (values: ValuesMap, square: string, value: string) => {
     for (const peer of constants.peersOf(square)) {
-        const result = eliminate(values, peer, value);
-        if (!result) return false;
+        if (!eliminate(values, peer, value)) return false;
     }
     return true;
 }

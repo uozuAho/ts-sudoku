@@ -33,8 +33,8 @@ export class ValuesMap {
     }
 
     /** returns true if square contains the given value */
-    public contains = (square: string, value: string): boolean => {
-        return this.get(square).indexOf(value) !== -1;
+    public contains = (coord: string, value: string): boolean => {
+        return this.get(coord).indexOf(value) !== -1;
     }
 
     /** get possible values at this coord */
@@ -42,10 +42,20 @@ export class ValuesMap {
         return this._values.get(coord);
     };
 
+    public any(square: string) {
+        return this.get(square).length > 0;
+    }
+
     /** set possible values at this coord */
     public set = (coord: string, values: string): void => {
         this._values.set(coord, values);
     };
+
+    /** remove a value from the given square */
+    public remove(coord: string, value: string) {
+        if (value.length > 1) throw new Error("can only remove 1 value");
+        this.set(coord, this.get(coord).replace(value, ''));
+    }
 
     /** all square values, in left to right, top to bottom order */
     public all = (): string[] => {
