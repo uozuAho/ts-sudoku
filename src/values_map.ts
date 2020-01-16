@@ -32,12 +32,10 @@ export class ValuesMap {
         return map;
     }
 
-    /** returns true if square contains the given value */
     public contains = (coord: string, value: string): boolean => {
         return this.get(coord).indexOf(value) !== -1;
     }
 
-    /** get possible values at this coord */
     public get = (coord: string): string => {
         return this._values.get(coord);
     };
@@ -46,21 +44,28 @@ export class ValuesMap {
         return this.get(square).length > 0;
     }
 
-    /** set possible values at this coord */
+    public count(square: string): number {
+        return this.get(square).length;
+    }
+
+    public all = (): string[] => {
+        return constants.squares.map(s => this._values.get(s));
+    };
+
+    public copy = (): ValuesMap => {
+        const map = new ValuesMap();
+        map._values = new Map(constants.squares.map(s => [s, this.get(s)]));
+        return map;
+    }
+
     public set = (coord: string, values: string): void => {
         this._values.set(coord, values);
     };
 
-    /** remove a value from the given square */
     public remove(coord: string, value: string) {
         if (value.length > 1) throw new Error("can only remove 1 value");
         this.set(coord, this.get(coord).replace(value, ''));
     }
-
-    /** all square values, in left to right, top to bottom order */
-    public all = (): string[] => {
-        return constants.squares.map(s => this._values.get(s));
-    };
 
     /** Returns a string of the grid, with empty squares displaying the possible
      *  values they could contain
