@@ -7,6 +7,18 @@ describe('ValuesMap', () => {
         });
     });
 
+    describe('copy', () => {
+        it('should not be the original object', () => {
+            const original = ValuesMap.ofAllValues();
+            expect(original.copy()).not.toBe(original);
+        });
+
+        it('should equal the original values', () => {
+            const original = ValuesMap.ofAllValues();
+            expect(original.copy().equals(original)).toBe(true);
+        });
+    });
+
     it('should format user friendly "possible values" string', () => {
         const valuesMap = ValuesMap.fromString(
             '113121611' +

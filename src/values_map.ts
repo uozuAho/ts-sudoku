@@ -58,6 +58,13 @@ export class ValuesMap {
         return map;
     }
 
+    public equals(other: ValuesMap): boolean {
+        for (const square of constants.squares) {
+            if (this.get(square) !== other.get(square)) return false;
+        }
+        return true;
+    }
+
     public set = (coord: string, values: string): void => {
         this._values.set(coord, values);
     };
