@@ -1,13 +1,14 @@
-import { Puzzle } from "./puzzle";
+import { SudokuSolver } from "./sudoku_solver";
+import { ValuesMap } from "./values_map";
 
 describe('puzzle', () => {
     it('should solve easy puzzle', () => {
-        const puzzle = Puzzle.fromString(
+        const initial_values = ValuesMap.fromString(
             '003020600900305001001806400008102900700000008006708200002609500800203009005010300');
 
-        puzzle.solve();
+        const solution = SudokuSolver.solve(initial_values);
 
-        expect(puzzle.toString()).toEqual(
+        expect(solution.toString()).toEqual(
             '4 8 3 |9 2 1 |6 5 7 \n' +
             '9 6 7 |3 4 5 |8 2 1 \n' +
             '2 5 1 |8 7 6 |4 9 3 \n' +
@@ -23,10 +24,10 @@ describe('puzzle', () => {
     });
 
     it('should partially solve first attempt', () => {
-        const puzzle = Puzzle.fromString(
+        const initial_values = ValuesMap.fromString(
             '4.....8.5.3..........7......2.....6.....8.4......1.......6.3.7.5..2.....1.4......');
 
-        puzzle.solve();
+        const solution = SudokuSolver.solve(initial_values);
 
         /* Just check a few values from this. cbf converting it to my format
               4      1679   12679  |  139     2369    269   |   8      1239     5    
@@ -40,8 +41,8 @@ describe('puzzle', () => {
             289      89     289   |   6      459      3    |  1259     7     12489  
             5      6789     3    |   2      479      1    |   69     489     4689  
             1      6789     4    |  589     579     5789  | 23569   23589   23689  */
-        expect(puzzle.valuesAt('A1')).toBe('4');
-        expect(puzzle.valuesAt('A2')).toBe('1679');
-        expect(puzzle.valuesAt('F9')).toBe('23789');
+        expect(solution.get('A1')).toBe('4');
+        expect(solution.get('A2')).toBe('1679');
+        expect(solution.get('F9')).toBe('23789');
     });
 });

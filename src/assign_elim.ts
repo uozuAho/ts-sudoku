@@ -7,7 +7,16 @@ import { ValuesMap } from "./values_map";
 export function assign(values: ValuesMap, square: string, value: string): boolean {
     if (value.length > 1) throw new Error('cant assign multiple values to a square');
 
+    if (!eliminate_values_other_than(values, square, value)) return false;
+
+    return true;
+}
+
+function eliminate_values_other_than(
+    values: ValuesMap, square: string, value: string): boolean
+{
     const other_values = values.get(square).replace(value, '');
+
     for (const v of other_values) {
         const result = eliminate(values, square, v);
         if (!result) return false;
@@ -29,6 +38,7 @@ export function eliminate(values: ValuesMap, square: string, value: string): boo
     if (!values.any(square)) return false;
 
     if (values.get(square).length === 1) {
+        // this square can only contain this value, so remove from peers
         const remaining_value = values.get(square);
         if (!removeFromPeers(values, square, remaining_value)) return false;
     }
@@ -41,8 +51,7 @@ export function eliminate(values: ValuesMap, square: string, value: string): boo
 
         if (places_for_value.length === 1) {
             // value can only be in one place, put it there (and propagate changes)
-            const result = assign(values, places_for_value[0], value);
-            if (!result) return false;
+            if (!assign(values, places_for_value[0], value)) return false;
         }
     }
 
