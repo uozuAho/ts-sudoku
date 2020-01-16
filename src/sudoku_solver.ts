@@ -9,7 +9,9 @@ export class SudokuSolver {
         for (const square of constants.squares) {
             const startingValue = startingValues.get(square);
             if (startingValue.length === 1) {
-                assign(values, square, startingValue);
+                if (!assign(values, square, startingValue)) {
+                    return null;
+                }
             }
         }
 
@@ -30,7 +32,8 @@ const search = (values: ValuesMap): ValuesMap | null => {
     for (const digit of values.get(min_square)) {
         const new_values = values.copy();
         // assign an arbitrary choice of digit to this square
-        assign(new_values, min_square, digit);
+        if (!assign(new_values, min_square, digit)) return null;
+
         // continue the search
         const result = search(new_values);
         if (result !== null) {
@@ -43,10 +46,12 @@ const search = (values: ValuesMap): ValuesMap | null => {
 
 const square_with_fewest_digits = (values: ValuesMap): string => {
     let min_digits = 9;
-    let min_square;
+    let min_square = 'A1';
     for (const square of constants.squares) {
-        if (values.get(square).length < min_digits) {
-            min_digits = values.get(square).length;
+        const num_digits = values.get(square).length;
+        // fewest... but greater than 1
+        if (num_digits > 1 && num_digits < min_digits) {
+            min_digits = num_digits;
             min_square = square;
         }
     }
