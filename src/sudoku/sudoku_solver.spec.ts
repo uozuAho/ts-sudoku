@@ -8,7 +8,8 @@ describe('SudokuSolver', () => {
 
         const solution = SudokuSolver.solve(initial_values);
 
-        expect(solution.toString()).toEqual(
+        expect(solution).not.toBe(null);
+        expect(solution!.toString()).toEqual(
             '4 8 3 |9 2 1 |6 5 7 \n' +
             '9 6 7 |3 4 5 |8 2 1 \n' +
             '2 5 1 |8 7 6 |4 9 3 \n' +
@@ -39,7 +40,8 @@ describe('SudokuSolver', () => {
 
         const solution = SudokuSolver.solve(initial_values);
 
-        expect(solution.equals(initial_values)).toBe(true);
+        expect(solution).not.toBe(null);
+        expect(solution!.equals(initial_values)).toBe(true);
     });
 
     it('should return null for unsolvable puzzle', () => {
@@ -66,7 +68,8 @@ describe('SudokuSolver', () => {
             '1 6 4 |8 7 5 |2 9 3');
 
         const solution = SudokuSolver.solve(initial_values);
-        expect(solution.equals(expected_solution)).toBe(true);
+        expect(solution).not.toBe(null);
+        expect(solution!.equals(expected_solution)).toBe(true);
     });
 
     it('should solve hardest puzzle', () => {
@@ -97,6 +100,7 @@ describe('SudokuSolver', () => {
             '5 9 8 |7 3 6 |2 4 1 ');
 
         const solution = SudokuSolver.solve(initial_values);
-        expect(solution.equals(expected_solution)).toBe(true);
+        expect(solution).not.toBe(null);
+        expect(solution!.equals(expected_solution)).toBe(true);
     });
 });
