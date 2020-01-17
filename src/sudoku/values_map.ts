@@ -1,16 +1,18 @@
 import * as constants from "./constants";
 import { zip } from "./utils";
 
-const EMPTY_SQUARE: string = null;
+const EMPTY_SQUARE: string = 'EMPTY';
 
 /** Map of square coordinate to possible values */
 export class ValuesMap {
     private _values: Map<string, string>;
 
     public static ofAllValues() {
-        const map = new ValuesMap();
-        map._values = new Map(constants.squares.map(s => [s, constants.digits]));
-        return map;
+        return new ValuesMap(new Map(constants.squares.map(s => [s, constants.digits])));
+    }
+
+    private constructor(values: Map<string, string>) {
+        this._values = values;
     }
 
     public static fromString(input: string) {
@@ -37,7 +39,8 @@ export class ValuesMap {
     }
 
     public get = (coord: string): string => {
-        return this._values.get(coord);
+        if (!this._values.has(coord)) throw new Error('dont do that');
+        return this._values.get(coord)!;
     };
 
     public any(square: string) {
@@ -49,13 +52,11 @@ export class ValuesMap {
     }
 
     public all = (): string[] => {
-        return constants.squares.map(s => this._values.get(s));
+        return constants.squares.map(s => this.get(s));
     };
 
     public copy = (): ValuesMap => {
-        const map = new ValuesMap();
-        map._values = new Map(constants.squares.map(s => [s, this.get(s)]));
-        return map;
+        return new ValuesMap(new Map(constants.squares.map(s => [s, this.get(s)])));
     }
 
     public equals(other: ValuesMap): boolean {
@@ -103,7 +104,7 @@ export class ValuesMap {
             }
             if (col === '9') {
                 output_arr.push('\n');
-                if (row == 'C' || row == 'F') {
+                if (row === 'C' || row === 'F') {
                     output_arr.push(line + '\n');
                 }
             }

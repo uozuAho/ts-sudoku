@@ -13,7 +13,9 @@ export const units =
 
 /** returns units that the given square is in */
 export const unitsOf = (square: string): string[][] => {
-    return _unit_lookup.get(square);
+    const result = _unit_lookup.get(square);
+    if (!result) throw new Error('dont do that');
+    return result;
 }
 
 /** returns peers of the given square
@@ -21,7 +23,9 @@ export const unitsOf = (square: string): string[][] => {
  *  Squares that share the same unit are 'peers'
  */
 export const peersOf = (square: string): string[] => {
-    return _peer_lookup.get(square);
+    const result = _peer_lookup.get(square);
+    if (!result) throw new Error('dont do that');
+    return result;
 }
 
 const _unit_lookup = build_unit_lookup();
