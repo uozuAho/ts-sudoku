@@ -1,6 +1,6 @@
 import { SudokuGenerator } from "./sudoku_generator";
 import { SudokuSolver } from "./sudoku_solver";
-import { performance } from "perf_hooks";
+// import { performance } from "perf_hooks";
 
 export class SudokuTimer {
 

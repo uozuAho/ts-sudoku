@@ -2,11 +2,20 @@ import React from 'react';
 import './App.css';
 import { ValuesMap } from './sudoku/values_map';
 import { SudokuSolver } from './sudoku/sudoku_solver';
+import { SudokuTimer } from './sudoku/sudoku_timer';
 
 const App: React.FC = () => {
   const puzzle = ValuesMap.fromString(
     '003020600900305001001806400008102900700000008006708200002609500800203009005010300');
   const solution = SudokuSolver.solve(puzzle);
+
+  const timer = new SudokuTimer();
+  timer.run(1000);
+  const times = timer.solutionTimes();
+  const total = times.reduce((prev, curr) => prev + curr, 0); 
+  console.log(`solved ${times.length} puzzles in ${total}ms`);
+  console.log(`max time: ${Math.max(...times)}ms`);
+  console.log(`avg time: ${total/times.length}ms`);
 
   return (
     <div className="App">
