@@ -1,5 +1,1 @@
 Copy of http://norvig.com/sudoku.html in typescript.
-
-# todo
-- profile & tune (beat the python one!)
-- make code as terse as norvig's! ...well, nearly
