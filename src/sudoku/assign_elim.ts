@@ -31,15 +31,19 @@ function eliminate_values_other_than(
 export function eliminate(values: ValuesMap, square: string, value: string): boolean {
     if (value.length > 1) throw new Error('cant eliminate multiple values from a square');
 
-    if (!values.contains(square, value)) return true;
+    const square_initial_values = values.get(square);
 
-    values.remove(square, value);
+    if (square_initial_values.indexOf(value) === -1) return true;
 
-    if (!values.any(square)) return false;
+    const square_updated_values = square_initial_values.replace(value, '');
 
-    if (values.get(square).length === 1) {
+    values.set(square, square_updated_values);
+
+    if (square_updated_values.length === 0) return false;
+
+    if (square_updated_values.length === 1) {
         // this square can only contain this value, so remove from peers
-        const remaining_value = values.get(square);
+        const remaining_value = square_updated_values;
         if (!removeFromPeers(values, square, remaining_value)) return false;
     }
 

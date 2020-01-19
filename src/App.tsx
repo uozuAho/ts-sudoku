@@ -10,12 +10,13 @@ const App: React.FC = () => {
   const solution = SudokuSolver.solve(puzzle);
 
   const timer = new SudokuTimer();
-  timer.run(1000);
+  timer.run(500);
   const times = timer.solutionTimes();
   const total = times.reduce((prev, curr) => prev + curr, 0); 
   console.log(`solved ${times.length} puzzles in ${total}ms`);
   console.log(`max time: ${Math.max(...times)}ms`);
   console.log(`avg time: ${total/times.length}ms`);
+  console.log(times);
 
   return (
     <div className="App">
